@@ -1,18 +1,16 @@
-import { CldImage } from "next-cloudinary";
-import UploadBotton from "./upload-button";
+import UploadBotton from "@/app/gallery/upload-button";
 import cloudinary from 'cloudinary'
-import ImageBox from "./ImageBox";
-
+import ImageBox from "@/app/gallery/ImageBox";
 
 export type SearchResult = {
     public_id:string;  
     tags : string[];  
 }
 
-const GalleryPage = async () => {
+const FavPage = async () => {
 
     const results = (await cloudinary.v2.search
-    .expression('resource_type:image')
+    .expression('resource_type:image AND tags=favorite')
     .sort_by('created_at','desc')
     .with_field('tags')
     .max_results(30)
@@ -24,7 +22,7 @@ const GalleryPage = async () => {
         <div>
             <div className="flex flex-col gap-8">
                 <div className="flex justify-between">
-                    <h1 className="text-4xl font-bold">Gallery</h1>                
+                    <h1 className="text-4xl font-bold">Favorites</h1>                
                     <UploadBotton/>
                 </div>
                 <div>
@@ -47,4 +45,4 @@ const GalleryPage = async () => {
      );
 }
  
-export default GalleryPage;
+export default FavPage;

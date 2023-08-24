@@ -4,7 +4,6 @@ import { UploadResult } from "../page";
 import { Button } from "@/components/ui/button";
 import {useRouter} from 'next/navigation';
 
-
 const UploadBotton = () => {
     const router = useRouter();
     return (                             
@@ -16,7 +15,7 @@ const UploadBotton = () => {
                 //etImageId(result.info.public_id);
                 setTimeout(()=>{
                     router.refresh();
-                },1000)                
+                },1000);             
             }}
             uploadPreset="ylobabg3" 
         >
