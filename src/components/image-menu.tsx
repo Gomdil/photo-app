@@ -3,28 +3,30 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuShortcut,
+    DropdownMenuItem,    
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Menu from "./icons/menu"
-import FolderIcon from "./icons/folder"
+import { AddToAlbum } from "./add-to-album"
+import { SearchResult } from "@/app/gallery/page"
+import { useState } from "react"
+
+
   
-  export function ImageMune() {
+  export function ImageMune({image}:{image:SearchResult;}) {
+    const [open,setOpen] = useState(false);
     return (
         <div className="absolute top-2 right-2">
-        <DropdownMenu>
+        <DropdownMenu open={open} onOpenChange={setOpen} >
             <DropdownMenuTrigger asChild>
                 <Button variant="secondary" className="w-8 h-8 p-0">
                     <Menu/>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-30"> 
-                <DropdownMenuItem className="flex justify-between">
-                    <FolderIcon />
-                    <span>앨범 추가</span>                    
-                </DropdownMenuItem>
-                    
+            <DropdownMenuContent className="w-70"> 
+                <DropdownMenuItem asChild className="flex justify-between" >                    
+                    <AddToAlbum image={image} onClose={()=>{setOpen(false)}}/>                   
+                </DropdownMenuItem>                    
             </DropdownMenuContent>
         </DropdownMenu>
         </div>      

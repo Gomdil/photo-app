@@ -51,7 +51,7 @@ const ImageBox = (
             }
             
 
-            <ImageMune/>
+            <ImageMune image={imageData}/>
             
         </div>            
     );
