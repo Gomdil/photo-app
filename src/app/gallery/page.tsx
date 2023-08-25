@@ -1,7 +1,9 @@
 import { CldImage } from "next-cloudinary";
 import UploadBotton from "./upload-button";
 import cloudinary from 'cloudinary'
-import ImageBox from "./ImageBox";
+import ImageBox from "../../components/ImageBox";
+import ImagesGrid from "@/components/images-grid";
+import GalleryGrid from "./gallery-grid";
 
 
 export type SearchResult = {
@@ -19,6 +21,7 @@ const GalleryPage = async () => {
     .execute()) as {resources : SearchResult[]};
 
     //console.log(results);
+  
 
     return ( 
         <div>
@@ -28,18 +31,9 @@ const GalleryPage = async () => {
                     <UploadBotton/>
                 </div>
                 <div>
-                    <div className="grid grid-cols-4 gap-4">
-                    {results.resources.map((result)=>(
-                    <ImageBox 
-                        path="/gallery"
-                        key={result.public_id}                        
-                        imagesData={result}
-                        alt="an images "
-                        width="400"
-                        height="300"
-                    />
-                    ))}
-                    </div>
+                    <GalleryGrid
+                        images = {results.resources}
+                    />                    
                 </div>
             </div>
         </div>

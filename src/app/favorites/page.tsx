@@ -1,6 +1,8 @@
 import UploadBotton from "@/app/gallery/upload-button";
 import cloudinary from 'cloudinary'
-import ImageBox from "@/app/gallery/ImageBox";
+import ImageBox from "@/components/ImageBox";
+import ForceRefresh from "@/components/force-refresh";
+import FavoritesList from "./favorites-list";
 
 export type SearchResult = {
     public_id:string;  
@@ -20,24 +22,17 @@ const FavPage = async () => {
 
     return ( 
         <div>
+            <ForceRefresh/>
             <div className="flex flex-col gap-8">
                 <div className="flex justify-between">
                     <h1 className="text-4xl font-bold">Favorites</h1>                
                     <UploadBotton/>
                 </div>
-                <div>
-                    <div className="grid grid-cols-4 gap-4">
-                    {results.resources.map((result)=>(
-                    <ImageBox 
-                        key={result.public_id}                        
-                        imagesData={result}
-                        alt="an images "
-                        width="400"
-                        height="300"
-                    />
-                    ))}
-                    </div>
-                </div>
+                
+                <FavoritesList 
+                    initialResorces={results.resources}
+                />
+                               
             </div>
         </div>
 
