@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { resolve } from "path";
 const setMark = async (
     publicId:string ,
-    ismark : boolean
+    ismark : boolean,
+    path:string
 ) => {
 
     if (ismark) {
@@ -15,7 +16,7 @@ const setMark = async (
         await cloudinary.v2.uploader.add_tag('favorite',[publicId]);
     }   
    await new Promise((resolve)=> setTimeout(resolve,500));
-   revalidatePath('/gallery');
+   revalidatePath(path);
    
 }
  

@@ -7,7 +7,9 @@ import { useTransition } from "react";
 import { SearchResult } from "./page";
 import FullHeart from "@/components/icons/Full-Heart";
 
-const ImageBox = (props: any & SearchResult) => {
+const ImageBox = (
+    props: any & {imageData : SearchResult;path:string }  
+) => {
 
     const [trans , startTrans ] = useTransition();
     const isFov = props.imagesData.tags.includes('favorite')
@@ -19,7 +21,7 @@ const ImageBox = (props: any & SearchResult) => {
             {isFov ? 
                 <FullHeart onClick={()=>{
                     startTrans(()=>{
-                        setMark(props.imagesData.public_id,true);
+                        setMark(props.imagesData.public_id,true,props.path);
                     })                             
                 }} 
                 className="absolute top-5 right-2 text-red-500 hover:text-white cursor-pointer"
@@ -27,7 +29,7 @@ const ImageBox = (props: any & SearchResult) => {
             : 
                 <Heart onClick={()=>{
                     startTrans(()=>{
-                        setMark(props.imagesData.public_id,false);
+                        setMark(props.imagesData.public_id,false,props.path);
                     })                
                 }} 
                 className="absolute top-5 right-2 hover:text-red-500 cursor-pointer"

@@ -31,6 +31,7 @@ const GalleryPage = async () => {
                     <div className="grid grid-cols-4 gap-4">
                     {results.resources.map((result)=>(
                     <ImageBox 
+                        path="/gallery"
                         key={result.public_id}                        
                         imagesData={result}
                         alt="an images "
