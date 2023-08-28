@@ -4,6 +4,7 @@ import cloudinary from 'cloudinary'
 import ImageBox from "../../components/ImageBox";
 import ImagesGrid from "@/components/images-grid";
 import GalleryGrid from "./gallery-grid";
+import SearchForm from "./search-form";
 
 
 export type SearchResult = {
@@ -11,16 +12,21 @@ export type SearchResult = {
     tags : string[];  
 }
 
-const GalleryPage = async () => {
+const GalleryPage = async ({searchParams:{search}}:{
+    searchParams : {
+        search : string 
+    }
+}) => {
 
     const results = (await cloudinary.v2.search
-    .expression('resource_type:image')
+    .expression(`resource_type:image ${search ? ` AND tags=${search}`: "" }`)
     .sort_by('created_at','desc')
     .with_field('tags')
     .max_results(30)
     .execute()) as {resources : SearchResult[]};
 
-    //console.log(results);
+    console.log(results);
+    console.log(`resource_type:image ${search ? `AND tags=${search}`: "" }`)
   
 
     return ( 
@@ -30,11 +36,14 @@ const GalleryPage = async () => {
                     <h1 className="text-4xl font-bold">Gallery</h1>                
                     <UploadBotton/>
                 </div>
-                <div>
-                    <GalleryGrid
-                        images = {results.resources}
-                    />                    
-                </div>
+
+
+                <SearchForm initialSearch={search}/>
+                
+                <GalleryGrid
+                    images = {results.resources}
+                />                    
+                
             </div>
         </div>
 

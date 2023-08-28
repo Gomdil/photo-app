@@ -1,5 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
 
@@ -12,6 +14,10 @@ const EditPage = ({searchParams:{publicid}}:{
         undefined|"generative-fill"|"blur"
         |"grayscale" | "Pixelate" | "Trim"
     >();
+
+    const [padingPrompt , setPadingPrompt] = useState("")
+    const [prompt , setPrompt] = useState("")
+
     return ( 
         <div>
             <div className="flex flex-col gap-8">
@@ -22,7 +28,14 @@ const EditPage = ({searchParams:{publicid}}:{
                 <div className="flex gap-4
                 ">
                 <Button variant="secondary" onClick={()=>{setTransformation(undefined)}}>초기화</Button>
-                <Button variant="secondary" onClick={()=>{setTransformation("generative-fill")}}>색상 채우기</Button>
+                <div className="flex flex-col gap-2 ">
+                    <Button variant="secondary" onClick={()=>{
+                        setTransformation("generative-fill");
+                        setPrompt(padingPrompt);
+                    }}>색상 채우기</Button>
+                    <Label htmlFor="prompt">Prompt</Label>
+                    <Input id="prompt" value={padingPrompt} onChange={e=>setPadingPrompt(e.currentTarget.value)}/>
+                </div>
                 <Button variant="secondary" onClick={()=>{setTransformation("blur")}}>blur</Button>
                 <Button variant="secondary" onClick={()=>{setTransformation("grayscale")}}>흑백</Button>
                 <Button variant="secondary" onClick={()=>{setTransformation("Pixelate")}}>모자이크</Button>
@@ -30,10 +43,14 @@ const EditPage = ({searchParams:{publicid}}:{
 
                 </div>
                 <div className="grid grid-cols-2 gap-12">
-                <CldImage src={publicid} width="300" height="200" alt="test"/>
+                <CldImage src={publicid} width="400" height="300" alt="test"/>
 
                 {tansformation === 'generative-fill' && (
-                    <CldImage src={publicid} width="300" height="200" alt="test" fillBackground crop="pad"/>
+                    <CldImage src={publicid} width="1800" height="1200" alt="test" fillBackground={
+                        {
+                            prompt ,
+                        }
+                    } crop="pad"/>
                 )}
 
                 {tansformation === 'blur' && (
